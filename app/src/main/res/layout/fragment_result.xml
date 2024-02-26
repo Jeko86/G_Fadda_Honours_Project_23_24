@@ -19,8 +19,9 @@
         <ImageView
             android:layout_width="370sp"
             android:layout_height="370sp"
+            android:adjustViewBounds="true"
             android:id="@+id/imageView"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:contentDescription="@string/image_classified" />
     </androidx.cardview.widget.CardView>
 
@@ -67,7 +68,6 @@
         android:textColor="#AA9F9F"
         android:textStyle="bold"
         android:textSize="27sp" />
-
 
 </RelativeLayout>
 

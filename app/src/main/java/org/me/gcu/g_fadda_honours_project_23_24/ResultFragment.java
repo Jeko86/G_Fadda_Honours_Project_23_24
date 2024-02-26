@@ -1,10 +1,16 @@
 package org.me.gcu.g_fadda_honours_project_23_24;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +21,9 @@ import android.widget.Toast;
 import org.me.gcu.g_fadda_honours_project_23_24.ml.Model;
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
+
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -27,6 +36,14 @@ public class ResultFragment extends Fragment {
     private TextView classified_result;
     private TextView confidence_result;
     private final int imageSize = 224;
+    private ClassificationResultVM viewModel;
+
+    // save tle latest classification
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(requireActivity()).get(ClassificationResultVM.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,7 +57,45 @@ public class ResultFragment extends Fragment {
             loadImageAndClassify(imagePath);
         }
 
+        viewModel.getClassifiedResult().observe(getViewLifecycleOwner(), result -> {
+            classified_result.setText(result);
+        });
+
+        viewModel.getConfidenceResult().observe(getViewLifecycleOwner(), confidence -> {
+            confidence_result.setText(confidence);
+        });
+
+        viewModel.getImagePath().observe(getViewLifecycleOwner(), newPath -> {
+            Bitmap bitmap = BitmapFactory.decodeFile(newPath);
+            imageView.setImageBitmap(bitmap);
+        });
+
         return view;
+    }
+    //**********************************
+    private String saveImageToInternalStorage(Bitmap bitmap) {
+        ContextWrapper cw = new ContextWrapper(requireActivity());
+        File directory = cw.getDir("images", Context.MODE_PRIVATE);
+        // Create a unique name for the file based on the current time to prevent overwrites
+        String fileName = "classified_" + System.currentTimeMillis() + ".jpg";
+        File filePath = new File(directory, fileName);
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(filePath);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return filePath.getAbsolutePath();
     }
 
     private void loadImageAndClassify(String imagePath) {
@@ -76,13 +131,16 @@ public class ResultFragment extends Fragment {
         try {
             Model model = Model.newInstance(requireContext());
 
+            // Scale the selected image for classification
+            Bitmap scaledImage = Bitmap.createScaledBitmap(image, imageSize, imageSize, true);
+
             // Creates inputs for reference.
             TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
             int[] intValues = new int[imageSize * imageSize];
-            image.getPixels(intValues, 0, image.getWidth(), 0, 0, image.getWidth(), image.getHeight());
+            image.getPixels(intValues, 0, scaledImage.getWidth(), 0, 0, scaledImage.getWidth(), scaledImage.getHeight());
             int pixel = 0;
             //iterate over each pixel and extract R, G, and B values. Add those values individually to the byte buffer.
             for(int i = 0; i < imageSize; i ++){
@@ -129,16 +187,17 @@ public class ResultFragment extends Fragment {
 
             classified_result.setText(diseaseName.get(classes[maxPos]));
 
-            /*String s = "";
-            for(int i = 0; i < classes.length; i++){
-                s += String.format("%s: %.1f%%\n", diseaseName.get(classes[i]), confidences[i]*100);
-            }
-            confidence_result.setText(s);*/
+            // getting the classification result
+            String resultLabel = diseaseName.get(classes[maxPos]);
+            viewModel.setClassifiedResult(resultLabel);
 
-            // After: Displaying only the confidence of the class with the highest confidence
+            //Displaying only the confidence of the class with the highest confidence
             String highestConfidencePercentage = String.format("%.1f%%", maxConfidence * 100);
-            confidence_result.setText(highestConfidencePercentage);
+            viewModel.setConfidenceResult(highestConfidencePercentage);
 
+            // Save the classified image in high resolution as before scaled to be use by TensorFlow Lite model
+            String imagePath = saveImageToInternalStorage(image);
+            viewModel.setImagePath(imagePath);
 
             // Releases model resources if no longer used.
             model.close();
@@ -146,6 +205,4 @@ public class ResultFragment extends Fragment {
             Toast.makeText(getContext(), "Error loading image or model: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
-
-
 }
