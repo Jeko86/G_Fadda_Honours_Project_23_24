@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">G_Fadda_Honours_Project_23_24</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="capture_photo">capture_photo</string>
+    <string name="display_image_captured">display image captured</string>
+    <string name="results">Results</string>
+    <string name="capture_image">Capture</string>
+    <string name="Gallery">Gallery</string>
+    <string name="Select_from_Gallery">Gallery</string>
+    <string name="classified_as">Classified as:</string>
+    <string name="image_classified">Image classified</string>
+    <string name="Confidence">Confidence</string>
+</resources>
