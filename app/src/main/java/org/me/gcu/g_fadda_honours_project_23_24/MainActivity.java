@@ -30,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
             else if (id == R.id.result) {
                 replaceFragment(new ResultFragment());
             }
-            else if (id == R.id.gallery) {
-                replaceFragment(new GalleryFragment());
-            }
             return true;
         });
     }

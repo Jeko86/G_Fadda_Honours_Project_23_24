@@ -13,13 +13,6 @@
         android:id="@+id/result"
         android:title="@string/results"
         android:icon="@drawable/fallen_leaf"/>
-    <item
-        android:id="@+id/fab_1"
-        android:title=""
-        android:enabled="false"/>
-    <item
-        android:id="@+id/gallery"
-        android:title="@string/Select_from_Gallery"
-        android:icon="@drawable/gallery"/>
+
 
 </menu>

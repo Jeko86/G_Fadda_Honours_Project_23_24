@@ -1,5 +1,6 @@
 package org.me.gcu.g_fadda_honours_project_23_24;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Bitmap;
@@ -7,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -77,13 +79,13 @@ public class ResultFragment extends Fragment {
         ContextWrapper cw = new ContextWrapper(requireActivity());
         File directory = cw.getDir("images", Context.MODE_PRIVATE);
         // Create a unique name for the file based on the current time to prevent overwrites
-        String fileName = "classified_" + System.currentTimeMillis() + ".jpg";
+        String fileName = "classified_" + System.currentTimeMillis() + ".png";
         File filePath = new File(directory, fileName);
 
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(filePath);
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -140,7 +142,7 @@ public class ResultFragment extends Fragment {
             byteBuffer.order(ByteOrder.nativeOrder());
 
             int[] intValues = new int[imageSize * imageSize];
-            image.getPixels(intValues, 0, scaledImage.getWidth(), 0, 0, scaledImage.getWidth(), scaledImage.getHeight());
+            scaledImage.getPixels(intValues, 0, scaledImage.getWidth(), 0, 0, scaledImage.getWidth(), scaledImage.getHeight());
             int pixel = 0;
             //iterate over each pixel and extract R, G, and B values. Add those values individually to the byte buffer.
             for(int i = 0; i < imageSize; i ++){
@@ -172,17 +174,8 @@ public class ResultFragment extends Fragment {
                     "Apple___healthy", "Background_without_leaves", "Grape___Black_rot",
                     "Grape___Esca_(Black_Measles)", "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)", "Grape___healthy"};
 
-            // Mapping from original class names to user-friendly names
-            HashMap<String, String> diseaseName = new HashMap<>();
-            diseaseName.put("Apple___Apple_scab", "Apple Scab");
-            diseaseName.put("Apple___Black_rot", "Apple Black Rot");
-            diseaseName.put("Apple___Cedar_apple_rust", "Cedar Apple Rust");
-            diseaseName.put("Apple___healthy", "Healthy Apple leaf");
-            diseaseName.put("Background_without_leaves", "No leave detected");
-            diseaseName.put("Grape___Black_rot", "Grape Black Rot");
-            diseaseName.put("Grape___Esca_(Black_Measles)", "Grape Esca");
-            diseaseName.put("Grape___Leaf_blight_(Isariopsis_Leaf_Spot)", "Grape Leaf Blight");
-            diseaseName.put("Grape___healthy", "Healthy Grape leaf");
+            //Mapping from original class names to user-friendly names
+            HashMap<String, String> diseaseName = getStringStringHashMap();
 
 
             classified_result.setText(diseaseName.get(classes[maxPos]));
@@ -192,7 +185,7 @@ public class ResultFragment extends Fragment {
             viewModel.setClassifiedResult(resultLabel);
 
             //Displaying only the confidence of the class with the highest confidence
-            String highestConfidencePercentage = String.format("%.1f%%", maxConfidence * 100);
+            @SuppressLint("DefaultLocale") String highestConfidencePercentage = String.format("%.1f%%", maxConfidence * 100);
             viewModel.setConfidenceResult(highestConfidencePercentage);
 
             // Save the classified image in high resolution as before scaled to be use by TensorFlow Lite model
@@ -204,5 +197,20 @@ public class ResultFragment extends Fragment {
         } catch (IOException e) {
             Toast.makeText(getContext(), "Error loading image or model: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
+    }
+
+    @NonNull
+    private static HashMap<String, String> getStringStringHashMap() {
+        HashMap<String, String> diseaseName = new HashMap<>();
+        diseaseName.put("Apple___Apple_scab", "Apple Scab");
+        diseaseName.put("Apple___Black_rot", "Apple Black Rot");
+        diseaseName.put("Apple___Cedar_apple_rust", "Cedar Apple Rust");
+        diseaseName.put("Apple___healthy", "Healthy Apple leaf");
+        diseaseName.put("Background_without_leaves", "No leave detected");
+        diseaseName.put("Grape___Black_rot", "Grape Black Rot");
+        diseaseName.put("Grape___Esca_(Black_Measles)", "Grape Esca");
+        diseaseName.put("Grape___Leaf_blight_(Isariopsis_Leaf_Spot)", "Grape Leaf Blight");
+        diseaseName.put("Grape___healthy", "Healthy Grape leaf");
+        return diseaseName;
     }
 }
