@@ -9,8 +9,7 @@ public class ClassificationResultVM extends ViewModel {
     private MutableLiveData<String> classifiedResult = new MutableLiveData<>();
     private MutableLiveData<String> confidenceResult = new MutableLiveData<>();
     private MutableLiveData<String> imagePath = new MutableLiveData<>();
-
-    private MutableLiveData<Integer> comparisonImageId = new MutableLiveData<>(); // Added line for reference image ID***
+    private MutableLiveData<Integer> comparisonImageId = new MutableLiveData<>();
 
 
     // Getters for LiveData
