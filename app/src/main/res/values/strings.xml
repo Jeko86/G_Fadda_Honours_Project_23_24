@@ -12,4 +12,5 @@
     <string name="image_classified">Image classified</string>
     <string name="Confidence">Confidence</string>
     <string name="gallery">Gallery</string>
+    <string name="comparison_Image">comaprison Image</string>
 </resources>

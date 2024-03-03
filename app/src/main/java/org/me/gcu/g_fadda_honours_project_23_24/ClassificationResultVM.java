@@ -10,6 +10,8 @@ public class ClassificationResultVM extends ViewModel {
     private MutableLiveData<String> confidenceResult = new MutableLiveData<>();
     private MutableLiveData<String> imagePath = new MutableLiveData<>();
 
+    private MutableLiveData<Integer> comparisonImageId = new MutableLiveData<>(); // Added line for reference image ID***
+
 
     // Getters for LiveData
     public LiveData<String> getClassifiedResult() {
@@ -23,7 +25,12 @@ public class ClassificationResultVM extends ViewModel {
     }
 
     public LiveData<String> getImagePath() {
+
         return imagePath;
+    }
+    //****************************
+    public LiveData<Integer>getComparisonImageId(){
+        return comparisonImageId;
     }
 
     // Setters for values
@@ -38,6 +45,11 @@ public class ClassificationResultVM extends ViewModel {
     }
 
     public void setImagePath(String path) {
+
         imagePath.setValue(path);
+    }
+    // ****************************
+    public void setComparisonImageId(Integer imageId) {
+        comparisonImageId.setValue(imageId);
     }
 }

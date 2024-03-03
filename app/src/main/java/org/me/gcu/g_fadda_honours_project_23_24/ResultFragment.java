@@ -34,10 +34,9 @@ import java.util.HashMap;
 
 public class ResultFragment extends Fragment {
 
-    private ImageView imageView;
-    private TextView classified_result;
-    private TextView confidence_result;
-    private final int imageSize = 224;
+    private ImageView imageView, comparisonImageView;
+    private TextView classified_result, confidence_result;
+    private final int imageSize = 256;
     private ClassificationResultVM viewModel;
 
     // save tle latest classification
@@ -50,9 +49,12 @@ public class ResultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_result, container, false);
+
         imageView = view.findViewById(R.id.imageView);
+        comparisonImageView = view.findViewById(R.id.comparisonImageView);
         classified_result = view.findViewById(R.id.classified_result);
         confidence_result = view.findViewById(R.id.confidence_result);
+
         // Check if arguments contain the image path and load it
         if (getArguments() != null && getArguments().containsKey("imagePath")) {
             String imagePath = getArguments().getString("imagePath");
@@ -61,6 +63,7 @@ public class ResultFragment extends Fragment {
 
         viewModel.getClassifiedResult().observe(getViewLifecycleOwner(), result -> {
             classified_result.setText(result);
+            updateComparisonImage(result);
         });
 
         viewModel.getConfidenceResult().observe(getViewLifecycleOwner(), confidence -> {
@@ -70,6 +73,13 @@ public class ResultFragment extends Fragment {
         viewModel.getImagePath().observe(getViewLifecycleOwner(), newPath -> {
             Bitmap bitmap = BitmapFactory.decodeFile(newPath);
             imageView.setImageBitmap(bitmap);
+        });
+
+        viewModel.getComparisonImageId().observe(getViewLifecycleOwner(), imageId -> {
+            if (imageId != null) {
+                comparisonImageView.setImageResource(imageId);
+
+            }
         });
 
         return view;
@@ -137,7 +147,7 @@ public class ResultFragment extends Fragment {
             Bitmap scaledImage = Bitmap.createScaledBitmap(image, imageSize, imageSize, true);
 
             // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 256, 256, 3}, DataType.FLOAT32);
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
@@ -198,6 +208,39 @@ public class ResultFragment extends Fragment {
             Toast.makeText(getContext(), "Error loading image or model: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
+
+    private void updateComparisonImage(String resultLabel) {
+        // Assuming you have a method in your ViewModel to set the reference image ID
+        if ("Apple Scab".equals(resultLabel)) {
+            viewModel.setComparisonImageId(R.drawable.applescab); // Example reference image
+        }
+        else if ("Apple Black Rot".equals(resultLabel)){
+            viewModel.setComparisonImageId(R.drawable.appleblackrot);
+        }
+        else if ("Cedar Apple Rust".equals(resultLabel)){
+            viewModel.setComparisonImageId(R.drawable.applerust);
+        }
+        else if ("Healthy Apple leaf".equals(resultLabel)){
+            viewModel.setComparisonImageId(R.drawable.applehealthy);
+        }
+        else if ("Grape Black Rot".equals(resultLabel)){
+            viewModel.setComparisonImageId(R.drawable.grapeblackrot);
+        }
+        else if ("Grape Esca".equals(resultLabel)){
+            viewModel.setComparisonImageId(R.drawable.grapeesca);
+        }
+        else if ("Grape Leaf Blight".equals(resultLabel)){
+            viewModel.setComparisonImageId(R.drawable.grapeleafblight);
+        }
+        else if ("Healthy Grape leaf".equals(resultLabel)){
+            viewModel.setComparisonImageId(R.drawable.grapehealthy);
+        }
+        else{
+            viewModel.setComparisonImageId(R.drawable.noresults);
+        }
+    }
+
+
 
     @NonNull
     private static HashMap<String, String> getStringStringHashMap() {
