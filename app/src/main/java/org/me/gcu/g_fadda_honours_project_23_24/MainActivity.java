@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        replaceFragment(new ResultFragment());
+        replaceFragment(new CaptureFragment());
         binding.bottomNavigationView.setBackground(null);
         binding.bottomNavigationView.setItemIconTintList(null);
 
