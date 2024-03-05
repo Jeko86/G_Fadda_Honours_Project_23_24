@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,37 +13,43 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:padding="16dp"
-        android:layout_marginBottom="100dp">
+        android:layout_gravity="bottom">
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_Gallery"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/gallery"
-            android:contentDescription="@string/Gallery" /> <!-- Replace with your description resource -->
-
-        <TextView
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bt_Gallery"
-            android:layout_alignStart="@id/bt_Gallery"
-            android:layout_alignEnd="@id/bt_Gallery"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/gallery" />
+            android:background="#AA000000"
+            android:padding="16dp"
+            android:layout_marginBottom="80dp">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_CapturePhoto"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:background="@drawable/baseline_camera_24"
-            android:layout_centerInParent="true"
-            android:contentDescription="@string/capture_photo" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_Gallery"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/gallery"
+                android:contentDescription="@string/Gallery" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bt_Gallery"
+                android:layout_alignStart="@id/bt_Gallery"
+                android:layout_alignEnd="@id/bt_Gallery"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/gallery" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/bt_CapturePhoto"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/baseline_camera_24"
+                android:layout_centerInParent="true"
+                android:contentDescription="@string/capture_photo" />
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/imageView"
@@ -51,10 +58,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:contentDescription="@string/display_image_captured" />
-
     </RelativeLayout>
 
-    <!-- Overlay View for Flash Effect -->
     <View
         android:id="@+id/flashOverlay"
         android:layout_width="match_parent"

@@ -36,7 +36,7 @@ public class ResultFragment extends Fragment {
 
     private ImageView imageView, comparisonImageView;
     private TextView classified_result, confidence_result;
-    private final int imageSize = 256;
+    private final int imageSize = 224;
     private ClassificationResultVM viewModel;
 
     // save tle latest classification
@@ -147,7 +147,7 @@ public class ResultFragment extends Fragment {
             Bitmap scaledImage = Bitmap.createScaledBitmap(image, imageSize, imageSize, true);
 
             // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 256, 256, 3}, DataType.FLOAT32);
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
