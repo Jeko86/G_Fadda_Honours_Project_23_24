@@ -131,6 +131,7 @@ public class ResultFragment extends Fragment {
         if (imageBitmap != null) {
             imageView.setImageBitmap(imageBitmap);
             // Scale the image for classification
+
             Bitmap scaledImage = Bitmap.createScaledBitmap(imageBitmap, imageSize, imageSize, false);
             classifyImage(scaledImage);
         } else {

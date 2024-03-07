@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import org.me.gcu.g_fadda_honours_project_23_24.databinding.ActivityMainBinding;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new CaptureFragment());
         binding.bottomNavigationView.setBackground(null);
         binding.bottomNavigationView.setItemIconTintList(null);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        setSupportActionBar(toolbar);
+
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             int id = item.getItemId();

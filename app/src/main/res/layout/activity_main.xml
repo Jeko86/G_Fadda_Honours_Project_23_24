@@ -8,6 +8,8 @@
     android:background="#D7494444"
     tools:context=".MainActivity">
 
+    <include layout="@layout/title_tolbar"/>
+
     <FrameLayout
         android:id="@+id/frame_layout"
         android:layout_width="match_parent"

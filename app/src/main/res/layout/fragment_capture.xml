@@ -8,7 +8,9 @@
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="80dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -50,14 +52,6 @@
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/capture_photo" />
         </RelativeLayout>
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/display_image_captured" />
     </RelativeLayout>
 
     <View

@@ -17,14 +17,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="65dp"
         android:gravity="center"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="5dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="0dp"
         android:background="@drawable/image_border"
@@ -36,33 +36,10 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="224dp"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:contentDescription="@string/image_classified" />
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/bottomImageCardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp"
-        android:background="@drawable/image_border"
-        app:layout_constraintTop_toBottomOf="@+id/resultLinearLayout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintWidth_percent="0.9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="40dp">
-
-        <ImageView
-            android:id="@+id/comparisonImageView"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:contentDescription="@string/comparison_Image" />
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -101,7 +78,7 @@
         android:id="@+id/comparisonImageLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Comparison Image"
+        android:text="@string/comparison_image"
         android:textColor="#AA9F9F"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -109,6 +86,29 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginBottom="10dp"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottomImageCardView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        android:background="@drawable/image_border"
+        app:layout_constraintTop_toBottomOf="@+id/resultLinearLayout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="40dp">
+
+        <ImageView
+            android:id="@+id/comparisonImageView"
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/comparison_Image" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

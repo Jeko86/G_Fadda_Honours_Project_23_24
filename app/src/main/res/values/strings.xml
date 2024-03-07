@@ -13,4 +13,5 @@
     <string name="Confidence">Confidence</string>
     <string name="gallery">Gallery</string>
     <string name="comparison_Image">comaprison Image</string>
+    <string name="comparison_image">Comparison Image</string>
 </resources>
