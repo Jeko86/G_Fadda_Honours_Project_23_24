@@ -95,7 +95,7 @@ public class ResultFragment extends Fragment {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(filePath);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -133,7 +133,7 @@ public class ResultFragment extends Fragment {
             // Scale the image for classification
 
             Bitmap scaledImage = Bitmap.createScaledBitmap(imageBitmap, imageSize, imageSize, false);
-            classifyImage(scaledImage);
+            classifyImage(imageBitmap);
         } else {
             Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT).show();
         }
