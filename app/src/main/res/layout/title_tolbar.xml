@@ -10,10 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#D7494444"
-        app:title="App Title"
+        app:title="G.Fadda Honours project MHW225671"
         app:titleTextColor="@android:color/white"
         android:elevation="4dp"/>
-
-
 
 </LinearLayout>
