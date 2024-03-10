@@ -241,8 +241,6 @@ public class ResultFragment extends Fragment {
         }
     }
 
-
-
     @NonNull
     private static HashMap<String, String> getStringStringHashMap() {
         HashMap<String, String> diseaseName = new HashMap<>();

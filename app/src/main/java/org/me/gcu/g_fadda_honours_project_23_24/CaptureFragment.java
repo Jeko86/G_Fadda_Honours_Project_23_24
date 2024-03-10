@@ -35,7 +35,6 @@ import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import android.media.MediaActionSound; // implement a sound effect when take a photo
 
-
 public class CaptureFragment extends Fragment {
 
     private PreviewView previewView;
