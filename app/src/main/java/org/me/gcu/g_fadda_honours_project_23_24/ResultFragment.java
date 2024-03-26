@@ -130,9 +130,7 @@ public class ResultFragment extends Fragment {
 
         if (imageBitmap != null) {
             imageView.setImageBitmap(imageBitmap);
-            // Scale the image for classification
 
-            Bitmap scaledImage = Bitmap.createScaledBitmap(imageBitmap, imageSize, imageSize, false);
             classifyImage(imageBitmap);
         } else {
             Toast.makeText(getContext(), "Failed to load image", Toast.LENGTH_SHORT).show();
@@ -148,7 +146,7 @@ public class ResultFragment extends Fragment {
             Bitmap scaledImage = Bitmap.createScaledBitmap(image, imageSize, imageSize, true);
 
             // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, imageSize, imageSize, 3}, DataType.FLOAT32);
             ByteBuffer byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3);
             byteBuffer.order(ByteOrder.nativeOrder());
 
@@ -181,9 +179,17 @@ public class ResultFragment extends Fragment {
                     maxPos = i;
                 }
             }
-            String[] classes = {"Apple___Apple_scab", "Apple___Black_rot", "Apple___Cedar_apple_rust",
-                    "Apple___healthy", "Background_without_leaves", "Grape___Black_rot",
-                    "Grape___Esca_(Black_Measles)", "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)", "Grape___healthy"};
+            String[] classes = {
+                    "Apple___Apple_scab",
+                    "Apple___Black_rot",
+                    "Apple___Cedar_apple_rust",
+                    "Apple___healthy",
+                    "Background_without_leaves",
+                    "Grape___Black_rot",
+                    "Grape___Esca_(Black_Measles)",
+                    "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+                    "Grape___healthy"
+            };
 
             //Mapping from original class names to user-friendly names
             HashMap<String, String> diseaseName = getStringStringHashMap();
@@ -210,10 +216,12 @@ public class ResultFragment extends Fragment {
         }
     }
 
+
+    // method to use to implement an image to compare with the result image
     private void updateComparisonImage(String resultLabel) {
-        // Assuming you have a method in your ViewModel to set the reference image ID
+
         if ("Apple Scab".equals(resultLabel)) {
-            viewModel.setComparisonImageId(R.drawable.applescab); // Example reference image
+            viewModel.setComparisonImageId(R.drawable.applescab);
         }
         else if ("Apple Black Rot".equals(resultLabel)){
             viewModel.setComparisonImageId(R.drawable.appleblackrot);

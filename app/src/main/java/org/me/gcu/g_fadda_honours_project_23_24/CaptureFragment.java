@@ -17,6 +17,8 @@ import androidx.camera.core.ImageCaptureException;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.OrientationEventListener;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.Manifest;
@@ -65,6 +67,8 @@ public class CaptureFragment extends Fragment {
                         displaySelectedImage(uri);
                     }
                 });
+
+
     }
 
     @Override
@@ -81,6 +85,8 @@ public class CaptureFragment extends Fragment {
 
         captureButton.setOnClickListener(v -> capturePhoto());
         galleryButton.setOnClickListener(v -> openGallery());
+
+
 
         return view;
     }
@@ -107,6 +113,30 @@ public class CaptureFragment extends Fragment {
                 preview.setSurfaceProvider(previewView.getSurfaceProvider());
                 cameraProvider.unbindAll();
                 cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture);
+
+                //*************set the target rotation using configuration settings*************
+                OrientationEventListener orientationEventListener = new OrientationEventListener(getContext()) {
+                    @Override
+                    public void onOrientationChanged(int orientation) {
+                        int rotation;
+
+                        // Monitors orientation values to determine the target rotation value
+                        if (orientation >= 45 && orientation < 135) {
+                            rotation = Surface.ROTATION_270;
+                        } else if (orientation >= 135 && orientation < 225) {
+                            rotation = Surface.ROTATION_180;
+                        } else if (orientation >= 225 && orientation < 315) {
+                            rotation = Surface.ROTATION_90;
+                        } else {
+                            rotation = Surface.ROTATION_0;
+                        }
+                        imageCapture.setTargetRotation(rotation);
+                    }
+                };
+                orientationEventListener.enable();
+
+                //**************************************************
+
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
