@@ -86,8 +86,6 @@ public class CaptureFragment extends Fragment {
         captureButton.setOnClickListener(v -> capturePhoto());
         galleryButton.setOnClickListener(v -> openGallery());
 
-
-
         return view;
     }
 

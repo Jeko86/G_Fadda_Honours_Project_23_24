@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".CaptureFragment">
 
+    <!--Android camera-->
     <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
@@ -17,14 +18,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-
+        <!--Android camera menu-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#AA000000"
             android:padding="16dp"
             android:layout_marginBottom="80dp">
-
+            <!--button to open the image gallery-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_Gallery"
                 android:layout_width="100dp"
@@ -44,6 +45,7 @@
                 android:gravity="center"
                 android:text="@string/gallery" />
 
+            <!--Button to capture image-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/bt_CapturePhoto"
                 android:layout_width="100dp"
@@ -54,6 +56,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <!-- implementation screen flash during the image capturing-->
     <View
         android:id="@+id/flashOverlay"
         android:layout_width="match_parent"

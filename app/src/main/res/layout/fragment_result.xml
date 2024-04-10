@@ -20,6 +20,7 @@
         android:layout_marginTop="65dp"
         android:gravity="center"/>
 
+    <!--card with image classified-->
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCardView"
         android:layout_width="0dp"
@@ -42,6 +43,7 @@
             android:contentDescription="@string/image_classified" />
     </androidx.cardview.widget.CardView>
 
+
     <LinearLayout
         android:id="@+id/resultLinearLayout"
         android:layout_width="0dp"
@@ -52,7 +54,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:gravity="center"
         android:layout_marginTop="20dp">
-
+        <!--label with classification result-->
         <TextView
             android:id="@+id/confidence_result"
             android:layout_width="wrap_content"
@@ -88,6 +90,7 @@
         android:gravity="center"
         android:layout_marginBottom="10dp"/>
 
+    <!--card with comparison image-->
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomImageCardView"
         android:layout_width="0dp"
